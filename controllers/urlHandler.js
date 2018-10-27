@@ -44,7 +44,7 @@ exports.addUrl = (req, res) => {
     //Check if the url has an appropriate protocol for the browser to use
     let protocolMatch = url.match(protocolRegex);
     if(!protocolMatch){
-      res.json({error: "Invalid URL"});
+      return res.json({error: "Invalid URL"});
     }
     
     //take the url with the protocol by storing the second match from the protocolMatch
@@ -53,7 +53,7 @@ exports.addUrl = (req, res) => {
     //check if the url has a valid url hostname pattern
     let hostNameMatch = hostAndQuery.match(hostNameRegex);
     if(!hostNameMatch){
-      res.json({error: "Invalid URL"});
+      return res.json({error: "Invalid URL"});
     }
     console.log("This is what is in the host name match: ", hostNameMatch); 
     //Check to see if the URL is a valid URL
@@ -61,7 +61,7 @@ exports.addUrl = (req, res) => {
         if(err){
             console.log(err);
             //the URL is invalid - return the error response object
-            res.json({error: 'invalid URL'})
+            return res.json({error: 'invalid URL'})
         }else{
             //the URL is valid - Check if it already exists before adding to the database
             UrlEntries.findOne({url: url}, (err, data)=>{
